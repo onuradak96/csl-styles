@@ -1,16 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="tr-TR">
-  <!-- This style was edited with the Visual CSL Editor (https://editor.citationstyles.org/visualEditor/) -->
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl"
+       version="1.0"
+       class="citation"
+       default-locale="tr-TR">
+
   <info>
-    <title>Gazi Tez (Numeric Brackets) - Bold Italic Journals</title>
+    <title>Gazi Tez (Numeric Brackets) – Bold Italic Journals</title>
     <id>http://www.zotero.org/styles/gazi-tez-numeric-brackets-bold-italic-journals</id>
     <link rel="self" href="http://www.zotero.org/styles/gazi-tez-numeric-brackets-bold-italic-journals"/>
     <category citation-format="numeric"/>
-    <updated>2026-01-11T11:20:52+00:00</updated>
+    <updated>2026-01-11T11:40:00+00:00</updated>
   </info>
+
+  <!-- AUTHOR -->
   <macro name="author">
     <names variable="author">
-      <name name-as-sort-order="first" initialize-with=". " delimiter=", " and="text" delimiter-precedes-last="always"/>
+      <name name-as-sort-order="first"
+            initialize-with=". "
+            delimiter=", "
+            and="text"
+            delimiter-precedes-last="always"/>
       <substitute>
         <names variable="editor"/>
         <names variable="translator"/>
@@ -19,7 +28,9 @@
       </substitute>
     </names>
   </macro>
-  <macro name="issued-year">
+
+  <!-- YEAR -->
+  <macro name="issued">
     <choose>
       <if variable="issued">
         <date variable="issued">
@@ -27,103 +38,75 @@
         </date>
       </if>
       <else>
-        <text term="no date" form="short"/>
+        <text term="no date"/>
       </else>
     </choose>
   </macro>
-  <macro name="issued-full">
-    <choose>
-      <if variable="issued">
-        <date variable="issued">
-          <date-part name="year"/>
-        </date>
-      </if>
-      <else>
-        <text term="no date" form="short"/>
-      </else>
-    </choose>
-  </macro>
+
+  <!-- TITLE -->
   <macro name="title">
-    <choose>
-      <if type="book report thesis" match="any">
-        <text variable="title" font-style="italic" font-weight="bold"/>
-      </if>
-      <else>
-        <text variable="title"/>
-      </else>
-    </choose>
+    <text variable="title"/>
   </macro>
-  <macro name="container-journal">
+
+  <!-- JOURNAL (BOLD + ITALIC SAFE) -->
+  <macro name="journal">
     <group delimiter=", ">
-      <text variable="container-title" font-style="italic" font-weight="bold"/>
+      <text font-style="italic">
+        <text variable="container-title" font-weight="bold"/>
+      </text>
       <group>
-        <text variable="volume" font-style="italic"/>
+        <text variable="volume"/>
         <text variable="issue" prefix="(" suffix=")"/>
       </group>
       <text variable="page"/>
     </group>
   </macro>
-  <macro name="container-booklike">
-    <group delimiter=". ">
+
+  <!-- BOOK PUBLISHER -->
+  <macro name="publisher">
+    <group delimiter=": ">
       <text variable="publisher-place"/>
       <text variable="publisher"/>
     </group>
   </macro>
-  <macro name="access">
-    <choose>
-      <if variable="URL">
-        <group delimiter=" ">
-          <text term="retrieved" text-case="capitalize-first"/>
-          <text term="from"/>
-          <text variable="URL"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
+
+  <!-- ENTRY -->
   <macro name="entry">
     <choose>
       <if type="article-journal article-magazine article-newspaper" match="any">
         <group delimiter=". " suffix=".">
           <text macro="author"/>
-          <group>
-            <text macro="issued-full" prefix="(" suffix=")"/>
-          </group>
+          <text macro="issued" prefix="(" suffix=")"/>
           <text macro="title"/>
-          <text macro="container-journal"/>
+          <text macro="journal"/>
         </group>
       </if>
-      <else-if type="book report thesis" match="any">
+
+      <else-if type="book thesis report" match="any">
         <group delimiter=". " suffix=".">
           <text macro="author"/>
-          <group>
-            <text macro="issued-full" prefix="(" suffix=")"/>
-          </group>
-          <text macro="title"/>
-          <text macro="container-booklike"/>
+          <text macro="issued" prefix="(" suffix=")"/>
+          <text font-style="italic">
+            <text variable="title" font-weight="bold"/>
+          </text>
+          <text macro="publisher"/>
         </group>
       </else-if>
+
       <else>
         <group delimiter=". " suffix=".">
           <text macro="author"/>
-          <group>
-            <text macro="issued-full" prefix="(" suffix=")"/>
-          </group>
+          <text macro="issued" prefix="(" suffix=")"/>
           <text macro="title"/>
-          <choose>
-            <if variable="container-title">
-              <text variable="container-title" font-style="italic" font-weight="bold"/>
-            </if>
-          </choose>
-          <choose>
-            <if variable="page">
-              <text variable="page"/>
-            </if>
-          </choose>
         </group>
       </else>
     </choose>
   </macro>
-  <citation collapse="citation-number" range-delimiter="-" delimiter=", ">
+
+  <!-- IN-TEXT CITATION: [1], [3-8,13] -->
+  <citation collapse="citation-number"
+            range-delimiter="-"
+            delimiter=", ">
     <sort>
       <key variable="citation-number"/>
     </sort>
@@ -131,7 +114,11 @@
       <text variable="citation-number"/>
     </layout>
   </citation>
-  <bibliography hanging-indent="false" entry-spacing="1" line-spacing="1">
+
+  <!-- BIBLIOGRAPHY -->
+  <bibliography hanging-indent="false"
+                entry-spacing="1"
+                line-spacing="1">
     <sort>
       <key variable="citation-number"/>
     </sort>
@@ -140,4 +127,5 @@
       <text macro="entry"/>
     </layout>
   </bibliography>
+
 </style>
